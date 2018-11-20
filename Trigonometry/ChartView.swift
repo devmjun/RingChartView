@@ -85,20 +85,20 @@ private class RingChartViewRenderer {
         
         (0..<information.count)
             .forEach { [weak self] (index: Int) in
-                guard let strongSelf = self else { return }
+                guard let self = self else { return }
                 
                 let trimedInformation = information[0...index]
                 let endAngle = trimedInformation.reduce(0, +)
                 let startAngle = endAngle - information[index]
                 
                 let piecePath = UIBezierPath(
-                    arcCenter: strongSelf.center,
+                    arcCenter: self.center,
                     radius: radius,
                     startAngle: startAngle,
                     endAngle: endAngle,
                     clockwise: true)
                 
-                piecePath.addLine(to: strongSelf.center)
+                piecePath.addLine(to: self.center)
                 piecePath.close()
                 copyColors[index].setFill()
                 piecePath.fill()
@@ -106,8 +106,8 @@ private class RingChartViewRenderer {
                 let centerOfArc: CGPoint = {
                     let angleRange = endAngle - startAngle
                     let centerAngle = angleRange / 2 + startAngle
-                    let arcCenterX = strongSelf.centerX + cos(centerAngle) * radius / 2
-                    let arcCenterY = strongSelf.centerY + sin(centerAngle) * radius / 2
+                    let arcCenterX = self.centerX + cos(centerAngle) * radius / 2
+                    let arcCenterY = self.centerY + sin(centerAngle) * radius / 2
                     return CGPoint(x: arcCenterX, y: arcCenterY)
                 }()
                 
@@ -121,7 +121,7 @@ private class RingChartViewRenderer {
                         origin: centerOfArc,
                         size: CGSize(width: radius, height: 36)),
                     options: .usesDeviceMetrics,
-                    attributes: strongSelf.attributes,
+                    attributes: self.attributes,
                     context: nil)
         }
     }
