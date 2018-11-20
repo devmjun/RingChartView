@@ -11,7 +11,7 @@ import UIKit
 @IBDesignable
 class PlaneCoordinates: CALayer {
     private var coordinatePlane = UIBezierPath()
-    private let pliotPath = UIBezierPath()
+    private let axisLinePath = UIBezierPath()
     
     var lineColor = UIColor.black.withAlphaComponent(0.2).cgColor {
         didSet {
@@ -57,22 +57,22 @@ class PlaneCoordinates: CALayer {
         range(Int(centerX))
             .compactMap { center.x + CGFloat($0) * 10 }
             .forEach {
-                pliotPath.move(to: CGPoint(x: $0, y: centerY - length/2))
-                pliotPath.addLine(to: CGPoint(x: $0, y: centerY + length/2))
-                pliotPath.move(to: CGPoint(x: $0 - centerX, y: centerY - length/2))
-                pliotPath.addLine(to: CGPoint(x: $0 - centerX, y: centerY + length/2))
+                axisLinePath.move(to: CGPoint(x: $0, y: centerY - length/2))
+                axisLinePath.addLine(to: CGPoint(x: $0, y: centerY + length/2))
+                axisLinePath.move(to: CGPoint(x: $0 - centerX, y: centerY - length/2))
+                axisLinePath.addLine(to: CGPoint(x: $0 - centerX, y: centerY + length/2))
         }
         range(Int(centerY))
             .compactMap{ centerY + CGFloat($0) * 10 }
             .forEach {
-                pliotPath.move(to: CGPoint(x: centerX - length/2, y: $0))
-                pliotPath.addLine(to: CGPoint(x: centerX + length/2, y: $0))
-                pliotPath.move(to: CGPoint(x: centerX - length/2, y: $0 - centerY ))
-                pliotPath.addLine(to: CGPoint(x: centerX + length/2, y: $0 - centerY))
+                axisLinePath.move(to: CGPoint(x: centerX - length/2, y: $0))
+                axisLinePath.addLine(to: CGPoint(x: centerX + length/2, y: $0))
+                axisLinePath.move(to: CGPoint(x: centerX - length/2, y: $0 - centerY ))
+                axisLinePath.addLine(to: CGPoint(x: centerX + length/2, y: $0 - centerY))
         }
         
         ctx.addPath(coordinatePlane.cgPath)
-        ctx.addPath(pliotPath.cgPath)
+        ctx.addPath(axisLinePath.cgPath)
         ctx.setStrokeColor(lineColor)
         ctx.strokePath()
     }
